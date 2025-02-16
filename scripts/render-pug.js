@@ -6,6 +6,16 @@ const sh = require('shelljs');
 const prettier = require('prettier');
 
 module.exports = function renderPug(filePath) {
+    const verifyFileSrc = upath.resolve(upath.dirname(__filename), '../src/verify-admitad.txt');
+    const verifyFileDest = upath.resolve(upath.dirname(__filename), '../dist/verify-admitad.txt');
+
+    if (fs.existsSync(verifyFileSrc)) {
+        fs.copyFileSync(verifyFileSrc, verifyFileDest);
+        console.log(`### INFO: Copied verify-admitad.txt to dist/`);
+    } else {
+        console.log(`### INFO: not copy verify-admitad.txt to dist/`);
+    }
+
     const destPath = filePath.replace(/src\/pug\//, 'dist/').replace(/\.pug$/, '.html');
     const srcPath = upath.resolve(upath.dirname(__filename), '../src');
 
